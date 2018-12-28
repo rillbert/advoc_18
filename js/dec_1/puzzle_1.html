@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dec 1 puzzle 1</title>
+  </head>
+
+<body>
+  <!-- Let the user choose a local text file -->
+  <input type="file" id="userInputFile" accept="text/plain"/>
+  <script>
+    (function()
+    {
+      "use strict";
+
+      document.
+        querySelector("#userInputFile").
+        addEventListener('change',getUserInput, false);
+
+      function getUserInput(evt)
+      {
+        var url;
+        var file;
+        file = evt.target.files[0];
+
+        var reader = new FileReader();
+        reader.addEventListener("load", parseUserInput, false);
+        reader.readAsText(file);
+      }
+
+      var reducer = (acc,current) =>
+      {
+        var i = parseInt(current);
+        if(isNaN(i))
+        {
+          return acc;
+        }
+
+        return acc + i;
+      }
+
+      //Run when the file has been loaded
+      function parseUserInput(event) {
+        var inputStr = event.target.result;
+        let sum = inputStr.toString().split("\n").reduce(reducer, 0);
+        // let sum = inputStr.toString().split("\n").reduce((acc,current) => acc + parseInt(current), 0);
+        alert(`The sum is ${sum}!`);
+      }
+    }
+    )();
+
+  </script>
+</body>
+</html>
